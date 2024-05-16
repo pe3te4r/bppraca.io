@@ -50,6 +50,7 @@
 
     function loadTask() {
         if (currentTaskIndex >= tasks.length) {
+            finishTest();
             document.getElementById('finalScore').textContent = `Znamka: ${correctAnswersCount} из ${tasks.length}`;
             document.getElementById('finalScore').style.display = 'block';
             return;
@@ -82,6 +83,48 @@
         });
         return template;
     }
+
+    function checkAnswer() {
+        const userAnswer = document.getElementById('userAnswer').value;
+        const task = tasks[currentTaskIndex];
+
+        if (userAnswer === task.correctAnswer) {
+            document.getElementById('result').textContent = 'Správne!';
+            correctAnswersCount++;
+        } else {
+            document.getElementById('result').textContent = 'Nesprávne!';
+        }
+
+        document.getElementById('submitAnswer').disabled = true;
+        document.getElementById('nextTask').style.display = 'block';
+    }
+
+    function loadNextTask() {
+        currentTaskIndex++;
+        loadTask();
+    }
+
+    async function finishTest() {
+        const response = await fetch('http://localhost:3000/submit', { // Замените на ваш URL сервера
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ score: correctAnswersCount, student: 'Имя ученика' }),
+        });
+
+        if (response.ok) {
+            alert('Результаты отправлены');
+        } else {
+            alert('Ошибка при отправке результатов');
+        }
+    }
+
+    window.onload = loadTask;
+</script>
+</body>
+</html>
+
 
     function checkAnswer() {
         const userAnswer = document.getElementById('userAnswer').value.trim();
