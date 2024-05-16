@@ -110,13 +110,13 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ score: correctAnswersCount, student: 'Имя ученика' }),
+            body: JSON.stringify({ score: correctAnswersCount, student: 'Meno a priezvisko' }),
         });
 
         if (response.ok) {
-            alert('Результаты отправлены');
+            alert('odoslané výsledky');
         } else {
-            alert('Ошибка при отправке результатов');
+            alert('Chyba pri odosielaní výsledkov');
         }
     }
 
